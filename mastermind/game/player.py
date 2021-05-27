@@ -1,13 +1,12 @@
-class player():
+class Player:
     '''keeps track of the person playing the game, their identity and their last move'''
 
 
+    def __init__(self, name):
+        self.name = name
 
-    def get_move(self):
-        pass
+    def make_guess(self):
 
-    def get_name(self):
-        pass
+        guess = input(f"Make a 4 digit guess, {self.name}. ")
+        return str(guess)
 
-    def set_move(self):
-        pass

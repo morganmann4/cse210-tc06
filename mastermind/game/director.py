@@ -1,42 +1,78 @@
-from game.board import Board
-from game.console import Console
-from game.move import Move
+from game.code import Code 
+from game.check import Check
+from game.guess import Guess
 from game.player import Player
-from game.roster import Roster
+from game.end_game import End_game
 
+guess = Guess()
+check = Check()
+code = Code()
+end_game = End_game()
 
-class director:
+class Director:
     
     def __init__(self):
-        self.keep_playing = True
-
+        self.code = ""
+        self.PLayer1 = ""
+        self.PLayer2 = ""
+        self.turns = 0
    
     def start_game(self):
-        '''starts the game and keeps the game running until there is a winner'''
+        """Called from the main function to start the game. Gets the 4 digit code from Code(). 
+        Gets 2 players by calling the get player function. Gets the first guess from player 1. 
+        Calls the function to turn the guess and the code into lists. Checks to see what numbers 
+        if any are right."""
+        self.code = code.get_random_num()
+        self.Player1 = self.get_player(1)
+        self.Player2 = self.get_player(2)
+        attempt = self.Player1.make_guess()
+        guess.guess_lists(attempt, self.code)
+        right_answer_list = guess.return_answer()
+        num_guessed_list = guess.return_player_guess()
+        check.check(num_guessed_list, right_answer_list)
+        attempt = self.Player2.make_guess()
+        guess.guess_lists(attempt, self.code)
+        right_answer_list = guess.return_answer()
+        num_guessed_list = guess.return_player_guess()
+        output = check.check(num_guessed_list, right_answer_list)
+        play = end_game.end_game(output)
+        if play  == True:
+            self.keep_playing()
         
-        self.prepare_game(self)
-        
-        while self.keep_playing:
-            self.get_inputs()
-            self.do_updates()
-            self.do_ouputs()
-
 
     
-    
-    def prepare_game(self):
-        '''Prepares the game before it begins by getting players name and adding it to the roster'''
-        for r in range(2):
-            name = input("")
+    def get_player(self, num):
 
-    def get_inputs(self):
-        '''gets the moves from current player at the beginning of each round'''
+        name = input(f"What is the name for player number {num}? ")
+        player = Player(name)
+        return player
 
-    def do_updates(self):
-        '''updates game information each round such as board with current move'''
+    def keep_playing(self):
 
-    def do_outputs(self):
-        '''Outputs important game info after each round. Checks if number was guessed correctly'''
+        if self.turns % 2 == 0:
+            attempt = self.Player1.make_guess()
+            guess.guess_lists(attempt, self.code)
+            right_answer_list = guess.return_answer()
+            num_guessed_list = guess.return_player_guess()
+            output = check.check(num_guessed_list, right_answer_list)
+            play = end_game.end_game(output)
+            self.turns += 1
+            if play == True:
+                self.keep_playing()
+
+        else:
+            attempt = self.Player2.make_guess()
+            guess.guess_lists(attempt, self.code)
+            right_answer_list = guess.return_answer()
+            num_guessed_list = guess.return_player_guess()
+            output = check.check(num_guessed_list, right_answer_list)
+            play = end_game.end_game(output)
+            self.turns += 1
+            if play  == True:
+                self.keep_playing()
+        
+        
+
 
     
 
