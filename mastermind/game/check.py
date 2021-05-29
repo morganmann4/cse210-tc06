@@ -1,8 +1,18 @@
 class Check:
-    '''Gets text or numerical input and displays text ouput'''
+    """Gets text or numerical input and displays text ouput"""
 
 
     def check(self, player_guess, answer):
+        """Gets numerical input from the user through the screen.
+
+        Args: 
+            self (Screen): An instance of Screen.
+            player_guess (string): The prompt to display to the user.
+            answer (string): The input from the user.
+
+        Returns:
+            Output x, o, *
+        """
         output = []
         for i in range(0, len(answer)):
 

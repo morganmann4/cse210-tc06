@@ -10,8 +10,22 @@ code = Code()
 end_game = End_game()
 
 class Director:
+    """A code template for a person who directs the game. The responsibility of 
+    this class of objects is to control the sequence of play.
+    
+    Stereotype:
+        Controller
+
+    Attributes:
+        keep_playing (boolean): Whether or not the game can continue.
+    """
     
     def __init__(self):
+        """The class constructor.
+        
+        Args:
+            self (Director): an instance of Director.
+        """
         self.code = ""
         self.PLayer1 = ""
         self.PLayer2 = ""
@@ -21,7 +35,12 @@ class Director:
         """Called from the main function to start the game. Gets the 4 digit code from Code(). 
         Gets 2 players by calling the get player function. Gets the first guess from player 1. 
         Calls the function to turn the guess and the code into lists. Checks to see what numbers 
-        if any are right."""
+        if any are right.
+        
+        Args:
+            self (Director): an instance of Director.
+        
+        """
         self.code = code.get_random_num()
         self.Player1 = self.get_player(1)
         self.Player2 = self.get_player(2)
@@ -42,12 +61,24 @@ class Director:
 
     
     def get_player(self, num):
+        """Gets the inputs at the beginning for each player on what the number is.
+
+        Args:
+            self (Director): An instance of Director.
+            num (Guess): An instance of Guess.
+        """
 
         name = input(f"What is the name for player number {num}? ")
         player = Player(name)
         return player
 
     def keep_playing(self):
+        """Outputs that 2 players make a guess for the four digit number. if the number is right, they win, but if it is 
+        wrong they keep playing
+
+        Args:
+            self (Director): An instance of Director.
+        """
 
         if self.turns % 2 == 0:
             attempt = self.Player1.make_guess()
